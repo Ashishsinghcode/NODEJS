@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1 id="try"></h1>
+    <h1 id="try1"></h1>
+    <h1 id="try2"></h1>
+    <h1 id="try3"></h1>
+    <h1 id="try4"></h1>
+    <h1 id="try5"></h1>
+    <h1 id="try6"></h1>
+    <h1 id="try7"></h1>
+    <h1 id="try8"></h1>
+    
+</body>
+</html>
+<script>
+    hello = function(){
+        return "Welcome Ashish"
+    }
+    hello1 = () => {
+        return "Welcome Ashu";
+    }
+    hello2 =()=>"Welcome to class";
+    hello3=(val)=> "Welcome to class "+val;
+    hello4=val=> "Welcome to class "+val;
+    const hello5=(x,y)=>{return x*y};
+        const tech=["HTML","CSS","JS","BOOTSTRAP"];
+        let output="";
+        for(let techo of tech){
+            
+           output += techo;
+            console.log(output)
+        }
+        const student = new Map([["HTML_marks",100],["CSS_marks",90],["JS_marks",150],])
+        const student2 = new Map();
+        student2.set("HTML_marks",130);
+        student2.set("CSS_marks",80);
+        class Student{
+            constructor(name,rollno){
+                this.name=name;
+                this.rollno=rollno;
+            }
+        }
+        const studata =new Student("Ashish",123);
+    
+    document.getElementById("try").innerHTML=hello();
+    document.getElementById("try1").innerHTML=hello1();
+    document.getElementById("try2").innerHTML=hello2();
+    document.getElementById("try3").innerHTML=hello3("Hello");
+    document.getElementById("try4").innerHTML=hello4("Hello Ashish");
+    document.getElementById("try5").innerHTML=hello5(10,15);
+    document.getElementById("try6").innerHTML=student.get("CSS_marks");
+    document.getElementById("try7").innerHTML=student2.get("CSS_marks");
+    document.getElementById("try8").innerHTML=studata.name+""+studata.rollno;
+</script>
