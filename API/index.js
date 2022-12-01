@@ -1,6 +1,7 @@
 const express = require('express')
 const app = express()
 app.use(express.urlencoded({extended:true}))
+const adminroutes = require('./routes/adminRoutes')
 app.get('/', function (req, res) {
   res.send('Hello World')
 })
@@ -60,5 +61,6 @@ app.get('/student', function (req, res) {
   
  )
 })
+app.use('/admin',adminroutes)
 
 app.listen(2000)
