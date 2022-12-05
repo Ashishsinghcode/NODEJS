@@ -63,4 +63,4 @@ app.get('/student', function (req, res) {
 })
 app.use('/admin',adminroutes)
 
-app.listen(2000)
+app.listen(3000)
