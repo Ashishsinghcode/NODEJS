@@ -1,33 +1,19 @@
-productarray =[
-    {
-        'product_name':'Jeans',
-        'price':500,
-        'description':'Made from pure cotton',
-        'quantity':20,
-        'image':'https://cdn.shopify.com/s/files/1/0608/7874/9892/products/51BwBzrPk8-YTKN01BB008MidBlue_1_540x.jpg?v=1666693724'
-    },
-]
+const product = require('../Models/productModel')
 
 function addProduct(req,res){
-    productarray.push(req.body)
+    let productObj = new product
+    productObj.product_name=req.body.product_name
+    productObj.price=req.body.price
+    productObj.descrption=req.body.descrption
+    productObj.quantity=req.body.quantity
+    productObj.save()
     res.json({
         'status':200,
         'success':true,
-        'message':'Product Inserted',
-        'data':req.body
+        'message':'Product added',
     })
 }
 
-function getProduct(req,res){
-    res.json({
-        'status':200,
-        'success':true,
-        'message':'Product loaded',
-        'data':productarray
-    })    
-}
-
-module.exports = {
-    addProduct,
-    getProduct
+module.exports={
+    addProduct
 }

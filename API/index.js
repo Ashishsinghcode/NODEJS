@@ -1,7 +1,12 @@
 const express = require('express')
 const app = express()
+const port = 5000
 app.use(express.urlencoded({extended:true}))
 const adminroutes = require('./routes/adminRoutes')
+
+const db= require('./config/db')
+
+
 app.get('/', function (req, res) {
   res.send('Hello World')
 })
@@ -63,4 +68,4 @@ app.get('/student', function (req, res) {
 })
 app.use('/admin',adminroutes)
 
-app.listen(3000)
+app.listen(port)
