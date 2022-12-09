@@ -1,10 +1,10 @@
 const express = require('express')
 const app = express()
-const port = 2000
+const port = 7000
 app.use(express.urlencoded({extended:true}))
 const db = require('./config/db')
-const userRoute= require('./routes/adminRoutes')
+const StudentRoute= require('./routes/studentRoutes')
 
-app.use('/practice', userRoute)
+app.use('/test', StudentRoute)
 
 app.listen(port)
