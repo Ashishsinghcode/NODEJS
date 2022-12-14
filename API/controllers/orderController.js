@@ -1,31 +1,8 @@
-const Order = require('../Models//orderModel')
+const Order = require('../Models/orderModel')
+const Cart = require('../Models/cartModel')
 
 function addOrder(req,res){
-    if(req.body == null || req.body.product_name == undefined){
-        res.json({
-            'status':500 ,
-            'success':false,
-            'message':'Invalid product_name'
-        })
-    }else if(req.body == null || req.body.price == undefined){
-        res.json({
-            'status':500,
-            'success':false,
-            'message':'Invalid price'
-        })
-    }else if(req.body == null || req.body.quantity == undefined){
-        res.json({
-            'status':500,
-            'success':false,
-            'message':'Invalid quantity'
-        })
-    }else if(req.body == null || req.body.user_name == undefined){
-        res.json({
-            'status':500,
-            'success':false,
-            'message':'Invalid user_name'
-        })
-    }else if(req.body == null || req.body.shipping_address == undefined){
+   if(req.body == null || req.body.shipping_address == undefined){
         res.json({
             'status':500,
             'success':false,
@@ -43,28 +20,45 @@ function addOrder(req,res){
             'success':false,
             'message':'Invalid tax'
         })
-    }else if(req.body == null || req.body.grand_total == undefined){
-        res.json({
-            'status':500,
-            'success':false,
-            'message':'Invalid grand_total'
+    }
+    else{
+        Cart.find({user_name:req.body.user_name}).exec()
+        .then((cartObj)=>{
+            if(cartObj == null){
+                res.json({
+                    'status':422,
+                    'success':false,
+                    'message':'No items in the cart'
+                })  
+            }else{
+                var total =0
+                let orderObj = new Order
+                cartObj.forEach(function(item){
+                    total += item.sub_total
+                    orderObj.order_item.push({
+                        'product_name':item.product_name,
+                        'price':item.price,
+                        'quantity':item.quantity,
+                        'sub_total':item.sub_total,
+                    })
+                })
+                var tax= req.body.tax/100*total;
+                var grand_total=total+tax
+                orderObj.user_name=req.body.user_name
+                orderObj.shipping_address=req.body.shipping_address
+                orderObj.shipping_contact=req.body.shipping_contact
+                orderObj.tax=req.body.tax
+                orderObj.grand_total=grand_total
+                orderObj.save()
+            console.log(total)
+            res.json({
+                'status':200,
+                'success':true,
+                'message':'data loaded'
+            })
+            }
         })
-    }else{
-        let orderObj = new Order
-        orderObj.product_name=req.body.catagory_name
-        orderObj.price=req.body.price
-        orderObj.quantity=req.body.quantity
-        orderObj.user_name=req.body.user_name
-        orderObj.shipping_address=req.body.shipping_address
-        orderObj.shipping_contact=req.body.shipping_contact
-        orderObj.tax=req.body.tax
-        orderObj.grand_total=req.body.grand_total
-        orderObj.save()
-        res.json({
-            'status':200,
-            'success':true,
-            'message':'Order Placed'
-        })
+
 
     }
 }
@@ -96,7 +90,29 @@ function viewOrder(req, res){
         }) 
     })
 }
+
+function addmoreorder(req,res){
+    Order.findOne({user_name:req.body.user_name}).exec()
+    .then((moreorder)=>{
+        if(moreorder == null){
+            res.json({
+                'status':422,
+                'success':false,
+                'message':'user_name required'
+            })
+        }else{
+            moreorder.order_item.sub_total
+            orderObj.order_item.push({
+                'product_name':req.body.product_name,
+                'price':req.body.price,
+                'quantity':req.body.quantity,
+                'sub_total':sub_total,
+            })
+        }
+    })
+}
 module.exports={
     addOrder,
-    viewOrder
+    viewOrder,
+    addmoreorder
 }

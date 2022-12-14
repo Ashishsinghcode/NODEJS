@@ -1,13 +1,13 @@
 const mongo = require('mongoose')
 
 const studentSchema = mongo.Schema({
-   'student_name':{type:String, required:true},
-   'class':{type:String, required:true},
-   'roll_no':{type:Number, required:true},
-   'section':{type:String, required:true},
-   'dob':{type:String, required:true},
-   'father_name':{type:String, required:true},
-   'mother_name':{type:String, required:true},
+   'student_name':{type:String},
+   'class':{type:String},
+   'roll_no':{type:Number},
+   'section':{type:String},
+   'dob':{type:String},
+   'father_name':{type:String},
+   'mother_name':{type:String},
    'created_at':{type:Date, default:Date.now()},
    'status':{type:Boolean, default:true}
    

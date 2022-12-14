@@ -26,17 +26,39 @@ function addCatagory(req,res){
             'message':'Invalid stock'
         })
     }else {
-        let catagoryObj = new Catagory
-        catagoryObj.catagory_name=req.body.catagory_name
-        catagoryObj.products=req.body.products
-        catagoryObj.stock=req.body.stock
-        catagoryObj.save()
-        res.json({
-            'status':200,
-            'success':true,
-            'message':'Catagory added'
-        })
 
+        Catagory.findOne({catagory_name:req.body.catagory_name}).exec()
+
+        .then((data)=>{
+            if(data == null){
+                let catagoryObj = new Catagory
+                catagoryObj.catagory_name=req.body.catagory_name
+                catagoryObj.products=req.body.products
+                catagoryObj.stock=req.body.stock
+                catagoryObj.save()
+                res.json({
+                    'status':200,
+                    'success':true,
+                    'message':'Catagory added'
+                })
+
+            }else{
+                res.json({
+                    'status':200,
+                    'success':false,
+                    'message':'Catagory already exists'
+                    })
+                }
+
+        })
+            .catch((err)=>{
+                res.json({
+                'status':500,
+                'success':false,
+                'message':String(err),
+                })
+            
+            })
     }
 }
 function viewCatagory(req, res){

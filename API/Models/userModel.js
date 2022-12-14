@@ -1,12 +1,12 @@
 const mongo = require('mongoose')
 
 const userSchema = mongo.Schema({
-    'first_name': {type:String,required:true},
-    'last_name': {type:String,required:true },
-    'email': {type:String,required:true },
-    'password': {type:String,required:true },
-    'address': {type:String,required:true },
-    'contact': {type:Number,required:true },
+    'first_name': {type:String},
+    'last_name': {type:String },
+    'email': {type:String },
+    'password': {type:String },
+    'address': {type:String },
+    'contact': {type:Number },
     'created_at':{type:Date, default:Date.now()},
     'isBlocked':{type:Boolean, default:false},
     'isStatus':{type:Boolean, default:true}
