@@ -51,20 +51,40 @@ function addUser(req,res){
         })
 
     }else {
-        let userObj = new User
-        userObj.first_name=req.body.first_name     
-        userObj.last_name=req.body.last_name
-        userObj.email=req.body.email
-        userObj.password=req.body.password
-        userObj.address=req.body.address
-        userObj.contact=req.body.contact
-        userObj.save()    
-        res.json({
-            'status':200,
-            'success':true,
-            'message':'Product Inserted',
-            
+        
+        User.findOne({email:req.body.email}).exec()
+        .then((data)=>{
+            if(data == null){
+                let userObj = new User
+                userObj.first_name=req.body.first_name     
+                userObj.last_name=req.body.last_name
+                userObj.email=req.body.email
+                userObj.password=req.body.password
+                userObj.address=req.body.address
+                userObj.contact=req.body.contact
+                userObj.save()    
+                res.json({
+                    'status':200,
+                    'success':true,
+                    'message':'User Inserted',
+                    
+                })
+
+            }else{
+                res.json({
+                    'status':200,
+                    'success':false,
+                    'message':'User Already Exist',
+                })
+            }
         })
+       .catch((err)=>{
+        res.json({
+            'status':500,
+            'success':false,
+            'message':String(err),
+        })
+       })
     }
 }
 function viewUser(req, res){
@@ -91,7 +111,7 @@ function viewUser(req, res){
             'status':500,
             'success':false,
             'message':'Server Error',
-            'data':err
+            'data':String(err)
         }) 
     })
 }

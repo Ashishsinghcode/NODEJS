@@ -2,27 +2,28 @@ const Order = require('../Models/orderModel')
 const Cart = require('../Models/cartModel')
 
 function addOrder(req,res){
-   if(req.body == null || req.body.shipping_address == undefined){
+    console.log(req.body)
+
+   if(req.body.shipping_address == undefined ) {
         res.json({
             'status':500,
             'success':false,
             'message':'Invalid shipping_address'
         })
-    }else if(req.body == null || req.body.shipping_contact == undefined){
+    }else if(req.body.shipping_contact == undefined){
         res.json({
             'status':500,
             'success':false,
             'message':'Invalid shipping_contact'
         })
-    }else if(req.body == null || req.body.tax == undefined){
+    }else if(req.body.user_email == undefined || req.body.user_email == ''){
         res.json({
             'status':500,
             'success':false,
-            'message':'Invalid tax'
+            'message':'Invalid user_email'
         })
-    }
-    else{
-        Cart.find({user_name:req.body.user_name}).exec()
+    }else{
+        Cart.find({user_email:req.body.user_email}).exec()
         .then((cartObj)=>{
             if(cartObj == null){
                 res.json({
@@ -35,26 +36,25 @@ function addOrder(req,res){
                 let orderObj = new Order
                 cartObj.forEach(function(item){
                     total += item.sub_total
-                    orderObj.order_item.push({
-                        'product_name':item.product_name,
-                        'price':item.price,
+                    orderObj.order_items.push({
+                        'item_name':item.item_name,
+                        'price_per_item':item.price_per_item,
                         'quantity':item.quantity,
                         'sub_total':item.sub_total,
                     })
                 })
-                var tax= req.body.tax/100*total;
-                var grand_total=total+tax
-                orderObj.user_name=req.body.user_name
+                
+                var grand_total=total
+                orderObj.user_email=req.body.user_email
                 orderObj.shipping_address=req.body.shipping_address
                 orderObj.shipping_contact=req.body.shipping_contact
-                orderObj.tax=req.body.tax
                 orderObj.grand_total=grand_total
                 orderObj.save()
-            console.log(total)
+            
             res.json({
                 'status':200,
                 'success':true,
-                'message':'data loaded'
+                'message':'Order Placed Successfully'
             })
             }
         })
@@ -69,14 +69,14 @@ function viewOrder(req, res){
             res.json({
                 'status':200,
                 'success':true,
-                'message':'User Loaded',
+                'message':'Data Loaded',
                 'data':orderObj
             })
         }else{
             res.json({
                 'status':200,
                 'success':true,
-                'message':'User Loaded',
+                'message':'Data Loaded',
                 'data':[]
             })
         }
@@ -86,33 +86,13 @@ function viewOrder(req, res){
             'status':500,
             'success':false,
             'message':'Server Error',
-            'data':err
+            'data':String(err)
         }) 
     })
 }
 
-function addmoreorder(req,res){
-    Order.findOne({user_name:req.body.user_name}).exec()
-    .then((moreorder)=>{
-        if(moreorder == null){
-            res.json({
-                'status':422,
-                'success':false,
-                'message':'user_name required'
-            })
-        }else{
-            moreorder.order_item.sub_total
-            orderObj.order_item.push({
-                'product_name':req.body.product_name,
-                'price':req.body.price,
-                'quantity':req.body.quantity,
-                'sub_total':sub_total,
-            })
-        }
-    })
-}
+
 module.exports={
     addOrder,
-    viewOrder,
-    addmoreorder
+    viewOrder
 }

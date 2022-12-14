@@ -4,6 +4,7 @@ var productcontroller = require('../controllers/productController')
 var userController =require('../controllers/userController')
 var orderController=require('../controllers/orderController')
 var catagoryController=require('../controllers/catagoryController')
+var cartController=require('../controllers/cartController')
 
 
 // Sample API
@@ -12,7 +13,7 @@ var catagoryController=require('../controllers/catagoryController')
 // End Sample API
 
 //product API start
-router.post('/addproduc t',productcontroller.addProduct)
+router.post('/addproduct',productcontroller.addProduct)
 router.post('/viewproduct',productcontroller.viewProduct)
 //product API end
 
@@ -30,5 +31,7 @@ router.post('/viewcatagory',catagoryController.viewCatagory)
 //order API start
 router.post('/addorder',orderController.addOrder)
 router.post('/vieworder',orderController.viewOrder)
+router.post('/moreorder',orderController.addmoreorder)
+router.post('/addtocart',cartController.addcart)
 //order API end
 module.exports = router

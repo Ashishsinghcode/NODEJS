@@ -45,6 +45,8 @@ if( req.body== null || req.body.student_name == undefined){
         'messsage':'Invalid mother_name'
     })
 }else{
+
+    
     let studentObj = Student()
     studentObj.student_name = req.body.student_name,
     studentObj.class = req.body.class,
@@ -64,7 +66,7 @@ if( req.body== null || req.body.student_name == undefined){
 }
 
 function listStudent(req,res){
-    Student.find(req.body).exec()
+    Student.exec()
     .then((studentObj)=>{
         if(studentObj != null ){
             res.json({

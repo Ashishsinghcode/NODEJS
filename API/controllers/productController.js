@@ -13,7 +13,7 @@ function addProduct(req,res){
             'success':false,
             'message':'Invalid price',
         })
-    }else if(req.body == null || req.body.descrption == undefined ){
+    }else if(req.body == null || req.body.description == undefined ){
         res.json({
             'status':500,
             'success':false,
@@ -26,16 +26,36 @@ function addProduct(req,res){
             'message':'Invalid quantity',
         })
     }else{
-        let productObj = new product
-        productObj.product_name=req.body.product_name
-        productObj.price=req.body.price
-        productObj.descrption=req.body.descrption
-        productObj.quantity=req.body.quantity
-        productObj.save()
-        res.json({
-            'status':200,
-            'success':true,
-            'message':'Product added',
+
+        product.findOne({product_name:req.body.product_name}).exec()
+        .then((data)=>{
+            if(data == null){
+                let productObj = new product
+                productObj.product_name=req.body.product_name
+                productObj.price=req.body.price
+                productObj.descrption=req.body.descrption
+                productObj.quantity=req.body.quantity
+                productObj.save()
+                res.json({
+                    'status':200,
+                    'success':true,
+                    'message':'Product added',
+                })
+
+            }else{
+                res.json({
+                    'status':200,
+                    'success':false,
+                    'message':'Product Already exists',
+                })
+            }
+        })
+        .catch((err)=>{
+            res.json({
+                'status':500,
+                'success':false,
+                'message':String(err),
+            })
         })
 
     } 
