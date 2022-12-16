@@ -42,7 +42,7 @@ function addcart(req,res){
     }
 }
 function viewCart(req, res){
-    Cart.find(req.body).exec()
+    Cart.find({'user_email':req.body.user_email}).exec()
     .then(cartObj=>{
         if(cartObj != null){
             res.json({

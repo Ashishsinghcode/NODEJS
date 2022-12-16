@@ -153,8 +153,136 @@ function viewoneUser(req, res){
     }
 }
 
+
+
+function perdelete(req,res){
+    if(req.body._id == undefined){
+        res.json({
+            'status':422,
+            'success':false,
+            'message':'_id is required'
+        })
+    }else{
+        User.findOne({'_id':req.body._id}).exec()
+        .then(data=>{
+            if(data == null){
+                res.json({
+                    'status':200,
+                    'success':true,
+                    'message':'User not exist'
+                })  
+            }else{
+                User.deleteOne({'_id':req.body._id}).exec()
+                .then(delone=>{
+                    res.json({
+                        'status':200,
+                        'success':true,
+                        'message':'User Deleted'
+                    })
+                })
+                .catch(err=>{
+                    res.json({
+                        'status':500,
+                        'success':false,
+                        'message':String(err)
+                    })
+                })
+            }
+        })
+        .catch(err=>{
+           
+                res.json({
+                    'status':500,
+                    'success':false,
+                    'message':String(err)
+                })
+            
+        })
+    }
+}
+function updateuser(req,res){
+    if(req.body._id == undefined){
+        res.json({
+            'status':422,
+            'success':false,
+            'message':'_id is required'
+        })
+    }else{
+        User.findOne({'_id':req.body._id}).exec()
+        .then(data=>{
+            if(data == null){
+                res.json({
+                    'status':200,
+                    'success':true,
+                    'message':'User not exist'
+                })  
+            }else{
+                data.first_name=req.body.first_name,
+                data.last_name=req.body.last_name,
+                data.email=req.body.email,
+                data.password=req.body.password,
+                data.contact=req.body.contact,
+                data.save()
+                    res.json({
+                        'status':200,
+                        'success':true,
+                        'message':'User Updated'
+                    })
+            }
+        })
+        .catch(err=>{
+           
+                res.json({
+                    'status':500,
+                    'success':false,
+                    'message':String(err)
+                })
+            
+        })
+    }
+}
+function tempdelete(req,res){
+    if(req.body._id == undefined){
+        res.json({
+            'status':422,
+            'success':false,
+            'message':'_id is required'
+        })
+    }else{
+        User.findOne({'_id':req.body._id}).exec()
+        .then(data=>{
+            if(data == null){
+                res.json({
+                    'status':200,
+                    'success':true,
+                    'message':'User not exist'
+                })  
+            }else{
+                data.isBlocked= req.body.isBlocked
+                data.save()
+                    res.json({
+                        'status':200,
+                        'success':true,
+                        'message':'User Deleted'
+                    })
+            }
+        })
+        .catch(err=>{
+           
+                res.json({
+                    'status':500,
+                    'success':false,
+                    'message':String(err)
+                })
+            
+        })
+    }
+}
 module.exports={
     addUser,
     viewUser,
-    viewoneUser
+    viewoneUser,
+    perdelete,
+    updateuser,
+    tempdelete
 }

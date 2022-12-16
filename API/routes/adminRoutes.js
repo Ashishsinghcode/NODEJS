@@ -21,6 +21,9 @@ router.post('/viewproduct',productcontroller.viewProduct)
 router.post('/adduser',userController.addUser)
 router.post('/viewuser',userController.viewUser)
 router.post('/viewbyid',userController.viewoneUser)
+router.post('/deleteuser',userController.perdelete)
+router.post('/updateuser',userController.updateuser)
+router.post('/tempdelete',userController.tempdelete)
 //USer API End
 
 //catagory API start
