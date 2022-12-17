@@ -11,4 +11,16 @@ router.post('/vieworder',orderController.viewOrder)
 router.post('/addtocart',cartController.addcart)
 router.post('/viewcart',cartController.viewCart)
 //order API end
+
+
+
+//ERROR PAGE
+router.all("**",function(req,res){
+    res.json({
+        'status':404,
+        'success':false,
+        'message':'Page not found'
+    })
+})
+//END ERROR PAGE
 module.exports = router

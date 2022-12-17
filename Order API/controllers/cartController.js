@@ -1,29 +1,21 @@
 const Cart = require('../Models/cartModel')
 
 function addcart(req,res){
-    if(req.body == null || req.body.item_name == undefined){
-        res.json({
-            'status':500 ,
-            'success':false,
-            'message':'Invalid item_name'
-        })
-    }else if(req.body == null || req.body.price_per_item == undefined){
-        res.json({
-            'status':500,
-            'success':false,
-            'message':'Invalid price_per_item'
-        })
-    }else if(req.body == null || req.body.quantity == undefined){
+    var validators=''
+     if(req.body == null || req.body.item_name == undefined || req.body.item_name == ''){
+        validators = "Item Name required \n"
+    }if(req.body == null || req.body.price_per_item == undefined || req.body.price_per_item == ''){
+        validators += "Price_per_item required \n"
+    }if(req.body == null || req.body.quantity == undefined || req.body.quantity == ''){
+        validators += "Quantity is required \n"
+    }if(req.body == null || req.body.user_email == undefined || req.body.user_email == ''){
+        validators += "User Email is required \n"
+    }
+    if(!!validators){
         res.json({
             'status':500,
             'success':false,
-            'message':'Invalid quantity'
-        })
-    } else if(req.body == null || req.body.user_email == undefined){
-        res.json({
-            'status':500,
-            'success':false,
-            'message':'Invalid User Name'
+            'message':validators
         })
     }else{
         let sub_total=req.body.price_per_item*req.body.quantity
@@ -39,10 +31,22 @@ function addcart(req,res){
             'success':true,
             'message':'Added to cart'
         })
+
+        }
     }
-}
+
 function viewCart(req, res){
-    Cart.find({'user_email':req.body.user_email}).exec()
+    let datalimit = 2;
+    let skipvalue = 0;
+    if(req.body.skipvalue != undefined){
+        skipvalue = datalimit*req.body.skipvalue
+    }
+    Cart.find(req.body)
+    
+    .sort({'_id':-1})
+    .limit(datalimit)
+    .skip(skipvalue)
+    .exec()
     .then(cartObj=>{
         if(cartObj != null){
             res.json({
