@@ -1,7 +1,7 @@
 const mongo = require('mongoose')
 
 const customerSchema = mongo.Schema({
-    'user_id':{type:mongo.Schema.Types.ObjectId, ref:'users', default:''},
+    'user_id':{type:mongo.Schema.Types.ObjectId, ref:'user', default:''},
     'sno':{type:Number, default:1},
     'customer_name':{type:String, default:''},
     'email':{type:String, default:''},

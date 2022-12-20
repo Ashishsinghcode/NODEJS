@@ -1,6 +1,7 @@
 const User = require('../model/userModel')
 const Customer = require('../model/customerModel')
-
+const bcrypt = require('bcrypt');
+const saltRounds = 10;
 function register(req,res){
 let validators=''
     if(req.body == null || req.body.name == undefined || req.body.name == ''){
@@ -37,7 +38,7 @@ let validators=''
                 let userObj = new User()
                 userObj.name=req.body.name,
                 userObj.email=req.body.email,
-                userObj.password=req.body.password
+                userObj.password=bcrypt.hashSync(req.body.password, saltRounds)+9
                 userObj.save()
                 .then(async userdata=>{
                     var customercount = await Customer.countDocuments().exec()
@@ -77,6 +78,39 @@ let validators=''
         })
     }
 }
+
+
+function listcustomer(req,res){
+    Customer.findOne(req.body).populate('user_id').exec()
+    .then(data=>{
+        if(data != null){
+            console.log(data)
+            res.json({
+                'status':200,
+                'success':true,
+                'data':data.email,
+            })
+        
+        }else{
+            res.json({
+                'status':200,
+                'success':true,
+                'message':'No user found',
+                
+            })
+        }
+    })
+    .catch(err=>{
+    res.json({
+                    'status':500,
+                    'success':false,
+                    'message':String(err),
+                    'data':'error on user data'
+                })
+    })
+}
 module.exports={
-    register
+    register,
+    listcustomer
+    
 }
