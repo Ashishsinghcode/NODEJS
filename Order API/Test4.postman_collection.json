@@ -1,0 +1,200 @@
+{
+	"info": {
+		"_postman_id": "86dbadc4-73ca-4330-8c47-94d1b79e6924",
+		"name": "Test4",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "24694885"
+	},
+	"item": [
+		{
+			"name": "addcatagory",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "catagory_name",
+							"value": "accessories",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:1000/test4/addcatagory",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "1000",
+					"path": [
+						"test4",
+						"addcatagory"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "addproduct",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "product_name",
+							"value": "shoes",
+							"type": "text"
+						},
+						{
+							"key": "price",
+							"value": "500",
+							"type": "text"
+						},
+						{
+							"key": "description",
+							"value": "Made with leather",
+							"type": "text"
+						},
+						{
+							"key": "catagory_name",
+							"value": "footwear",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:1000/test4/addproduct",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "1000",
+					"path": [
+						"test4",
+						"addproduct"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "viewproduct",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:1000/test4/viewproduct",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "1000",
+					"path": [
+						"test4",
+						"viewproduct"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "adduser",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "first_name",
+							"value": "Ashish",
+							"type": "text"
+						},
+						{
+							"key": "last_name",
+							"value": "Singh",
+							"type": "text"
+						},
+						{
+							"key": "email",
+							"value": "A@gmail.com",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "123",
+							"type": "text"
+						},
+						{
+							"key": "contact",
+							"value": "1234567890",
+							"type": "text"
+						},
+						{
+							"key": "address",
+							"value": "jalandhar",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:1000/test4/addcustomer",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "1000",
+					"path": [
+						"test4",
+						"addcustomer"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "addtocart",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "product_name",
+							"value": "shoes",
+							"type": "text"
+						},
+						{
+							"key": "price",
+							"value": "500",
+							"type": "text"
+						},
+						{
+							"key": "quantity",
+							"value": "2",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:1000/test4/addtocart",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "1000",
+					"path": [
+						"test4",
+						"addtocart"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

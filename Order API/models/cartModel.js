@@ -1,11 +1,11 @@
 const mongo = require('mongoose')
 
 const cartSchema = mongo.Schema({
-    'item_name':{type:String},
-    'price_per_item':{type:Number},
-    'quantity':{type:Number},
+    'product_name':{type:String},
+    'price':{type:Number},
     'sub_total':{type:Number},
-    'user_email':{type:String},
+    'quantity':{type:Number},
+    'email':{type:String},
     'isBlocked':{ type:Boolean, default:false},
     'isStatus':{ type:Boolean, default:true },
     'created_at':{ type:Date, default:Date.now()}

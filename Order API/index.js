@@ -8,6 +8,6 @@ const db= require('./config/db')
 
 
 
-app.use('/order',orderroutes)
+app.use('/test4',orderroutes)
 
 app.listen(port)
