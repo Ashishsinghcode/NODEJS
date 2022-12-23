@@ -6,20 +6,23 @@ var cartController=require('../controllers/cartController')
 var productController=require('../controllers/productController')
 let usercontroller = require('../controllers/userController')
 
-//User API start
-router.post('/addcustomer', usercontroller.register)
-router.post('/listcustomer', usercontroller.listcustomer)
 router.post('/login', usercontroller.login)
+router.post('/addcustomer', usercontroller.register)
+router.post('/viewproduct',productController.viewProduct)
+
+
+router.use(require('../common/adminMiddleware'))
+//User API start
+router.post('/listcustomer', usercontroller.listcustomer)
 //USer API end
 //Catagory API
 router.post('/addcatagory',catagoryController.addCatagory)
+router.post('/addproduct',productController.addProduct)
 //router.post('/viewcatagory',catagoryController.viewCatagory)
 //ENd Catagory API
 
 
 //product API
-router.post('/addproduct',productController.addProduct)
-router.post('/viewproduct',productController.viewProduct)
 
 //end product API
 //order API start
