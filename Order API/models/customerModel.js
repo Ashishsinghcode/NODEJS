@@ -6,6 +6,8 @@ const customerSchema = mongo.Schema({
     'first_name':{type:String, default:''},
     'last_name':{type:String, default:''},
     'email':{type:String, default:''},
+    'profile_pic':{type:String, default:'profile.jpg'},
+
     'password':{type:String, default:''},
     'address':{type:String, default:''},
     'contact':{type:Number, default:0},

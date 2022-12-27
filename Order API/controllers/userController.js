@@ -44,9 +44,10 @@ let validators=''
                 })
             }else{
                 let userObj = new User()
-                userObj.first_name=req.body.first_name,
-                userObj.last_name=req.body.last_name,
-                userObj.email=req.body.email,
+                userObj.first_name=req.body.first_name
+                userObj.last_name=req.body.last_name
+                userObj.email=req.body.email
+               
                 userObj.password=bcrypt.hashSync(req.body.password, saltRounds)
                 userObj.save()
                 .then(async userdata=>{
@@ -56,6 +57,11 @@ let validators=''
                     customerObj.first_name=req.body.first_name
                     customerObj.last_name=req.body.last_name
                     customerObj.email=req.body.email
+                    
+                    if(req.file){
+                        customerObj.profile_pic=req.file.filename
+    
+                    }
                     customerObj.password=req.body.password
                     customerObj.address=req.body.address
                     customerObj.contact=req.body.contact
@@ -122,8 +128,11 @@ function listcustomer(req,res){
 
 
 function login(req,res){
+    console.log("API HIT")
+    console.log(req.body)
     User.findOne({'email':req.body.email}).exec()
     .then(userdata=>{
+        console.log(userdata)
         if(userdata == null){
             res.json({
                 'status':200,
@@ -138,7 +147,7 @@ function login(req,res){
                     'id':userdata._id,
                     'email':userdata.email
                 }
-                const token = jwt.sign(payload,privatekey,{expiresIn:60*2})
+                const token = jwt.sign(payload,privatekey,{expiresIn:60*20})
                 res.json({
                     'status':200,
                     'success':true,
@@ -163,9 +172,50 @@ function login(req,res){
         })
     })
 }
+function changepass(req,res){
+    if(req.body.new_password == req.body.confirm_password){
+        User.findOne({'email':req.body.email}).exec()
+        .then(userdata=>{
+            if(userdata == null){
+                res.json({
+                    'status':200,
+                    'success':false,
+                    'Message': "User not exists"
+                })
+            }
+            else{
+                if(bcrypt.compareSync(req.body.old_password,userdata.password)){
+                   
+                    userdata.password =bcrypt.hashSync(req.body.new_password,saltRounds)
+                    userdata.save()
+                }else{
+                    res.json({
+                        'status':200,
+                        'success':false,
+                        'Message': "Old password not matched"
+                    })
+                }
+            }
+        })
+        .catch(err=>{
+            res.json({
+                'status':500,
+                'success':false,
+                'Message': String(err)
+            })  
+        })
+    }else{
+        res.json({
+            'status':422,
+            'success':false,
+            'Message': "New password and confirm password doesn't match"
+        })
+    }
+}
 module.exports={
     register,
     listcustomer,
-    login
+    login,
+    changepass
     
 }
